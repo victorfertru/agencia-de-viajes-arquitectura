@@ -13,9 +13,9 @@ export class LoaderService {
 
   showLoading(url: string): void {
     if (url) {
-      const e = this.requestMap.get(url);
-      if (e != undefined) {
-        this.requestMap.set(url, e + 1);
+      const contador = this.requestMap.get(url);
+      if (contador !== undefined) {
+        this.requestMap.set(url, contador + 1);
       } else {
         this.requestMap.set(url, 1);
       }
@@ -26,7 +26,12 @@ export class LoaderService {
 
   hideLoading(url: string): void {
     if (url) {
-      this.requestMap.delete(url);
+      const contador = this.requestMap.get(url);
+      if (contador !== undefined && contador > 1) {
+        this.requestMap.set(url, contador - 1);
+      } else {
+        this.requestMap.delete(url);
+      }
 
       if (this.requestMap.size === 0) {
         this.$loading.next(false);
