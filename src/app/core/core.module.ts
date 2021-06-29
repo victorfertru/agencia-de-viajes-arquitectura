@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
 import { HttpLoaderInterceptor } from './services/http-loader.interceptor';
 registerLocaleData(es);
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,10 @@ registerLocaleData(es);
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: `es` },

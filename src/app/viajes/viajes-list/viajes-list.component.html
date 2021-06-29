@@ -1,10 +1,10 @@
 <div>
-   <a [routerLink]="['..']" class="btn btn-warning">Volver a Inicio</a>
+   <button [routerLink]="['']" class="btn primary" type="button">Volver a Inicio</button>
 </div>
 <app-viajes-filter [tiposDeViaje]="tiposDeViaje" (buscar)="searchClick($event)"></app-viajes-filter>
 <div class="row mb-3">
    <div class="col-12">
-      <a (click)="cambiarVistaClick()" class="btn btn-warning">Cambiar vista</a>
+      <button (click)="cambiarVistaClick()" class="btn " type="button">Cambiar vista</button>
    </div>
 </div>
 

@@ -1,21 +1,17 @@
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark mb-3">
-   <div class="container justify-content-start">
-      <a class="navbar-brand" [routerLink]="['']" title="Ir a Inicio">ViajeSeidón</a>
+<mat-toolbar color="primary">
 
-      <div class="navbar-nav">
-         <a class="nav-link" [routerLink]="['viajes']" title="Listado de Viajes">Listado de Viajes</a>
-         <a class="nav-link" [routerLink]="['viajes/editar']" title="Crear viaje">Crear viaje</a>
-         <a class="nav-link" [routerLink]="['clientes']" title="Clientes">Clientes</a>
-         <a class="nav-link" [routerLink]="['clientes/editar']" title="Crear cliente">Crear cliente</a>
-      </div>
+   <a class="navbar-brand" [routerLink]="['']" title="Ir a Inicio">ViajeSeidón</a>
 
-      <div class="logout">
-         <i class="fas fa-sign-out-alt" (click)="logout.emit()" title="Cerrar sesión"></i>
-
-      </div>
+   <div>
+      <a [routerLink]="['viajes']" title="Listado de Viajes">Listado de Viajes</a>
+      <a [routerLink]="['viajes/editar']" title="Crear viaje">Crear viaje</a>
+      <a [routerLink]="['clientes']" title="Clientes">Clientes</a>
+      <a [routerLink]="['clientes/editar']" title="Crear cliente">Crear cliente</a>
    </div>
 
-
-
-
-</nav>
+   <div class="logout">
+      <button mat-icon-button aria-label="Cerrar sesión" title="Cerrar sesión">
+         <mat-icon (click)="logout.emit()">logout</mat-icon>
+      </button>
+   </div>
+</mat-toolbar>

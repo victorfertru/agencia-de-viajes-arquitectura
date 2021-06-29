@@ -1,6 +1,7 @@
 <form [formGroup]="clientesForm" (ngSubmit)="guardarClick(clientesForm)" [ngClass]="{submited: submited}">
    <div>
-      <a [routerLink]="['/clientes']" class="btn btn-warning">Volver a Clientes</a>
+
+      <button [routerLink]="['/clientes']" class="btn primary" type="button">Volver a Clientes</button>
    </div>
    <fieldset>
       <legend>

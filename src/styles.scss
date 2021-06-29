@@ -1,3 +1,6 @@
+.container {
+  padding: 2rem 6rem;
+}
 .btn {
   width: 200px;
   margin-right: 20px;
@@ -22,17 +25,10 @@
     }
 
     &:disabled {
-      background-color: gray !important;
-    }
-  }
-  &.btn-warning {
-    color: #000;
-    background-color: #ffc107;
-    border-color: #ffc107;
-
-    &:hover {
-      background-color: #80808033;
-      cursor: pointer;
+      color: gray !important;
+      &:hover {
+        background-color: white;
+      }
     }
   }
 }
@@ -42,48 +38,6 @@
   flex-flow: row-reverse;
   button {
     margin-left: 20px;
-  }
-}
-
-.mi-select {
-  width: 200px;
-  height: 20px;
-  border-bottom: 1px solid grey;
-  cursor: pointer;
-  position: relative;
-
-  i {
-    right: 5px;
-    position: absolute;
-    top: -5px;
-
-    &.fa-times {
-      &:hover {
-        color: red;
-      }
-    }
-  }
-
-  .select-container {
-    display: block;
-    top: 20px;
-    position: absolute;
-    width: 100%;
-    background: white;
-    box-shadow: 0 2px 2px 1px rgba(29, 27, 27, 0.164);
-    ul {
-      list-style: none;
-      padding-left: 0;
-      li {
-        padding-left: 5px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-
-        &:hover {
-          background-color: lawngreen;
-        }
-      }
-    }
   }
 }
 
@@ -110,14 +64,18 @@ fieldset {
 }
 
 .submited {
-  input,
+  input {
+    &.ng-invalid {
+      border-bottom: 1px solid red !important;
+    }
+  }
+
   select {
     &.ng-invalid {
       border-bottom: 1px solid red !important;
     }
   }
 }
-
 .field-element {
   display: flex;
   flex-direction: column;
@@ -172,8 +130,81 @@ fieldset {
 
 span {
   &.error {
-    color: #ba0000;
-    font-size: 0.85rem;
+    color: red;
+    font-size: 0.8rem;
     margin-top: 5px;
   }
+}
+
+table {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  width: 100%;
+
+  th {
+    text-align: left;
+    padding: 0.9rem;
+    padding-left: 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: darkblue;
+  }
+
+  tr {
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  td {
+    padding: 0.9rem;
+    padding-left: 2rem;
+
+    &.center {
+      text-align: center;
+    }
+
+    &.right {
+      text-align: right;
+    }
+  }
+
+  &.center {
+    text-align: center;
+  }
+
+  &.right {
+    text-align: right;
+  }
+
+  .en-oferta {
+    // background-color: rgba(247, 133, 133, 0.315);
+    color: rgb(98, 16, 16);
+    font-weight: bold;
+  }
+
+  .fa-lock-open {
+    color: green;
+  }
+
+  .fa-lock {
+    color: red;
+  }
+
+  .in-red {
+    color: red;
+  }
+
+  .fa {
+    margin-right: 10px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
