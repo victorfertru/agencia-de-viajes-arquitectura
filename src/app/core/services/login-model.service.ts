@@ -7,8 +7,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Login } from '../login/login-model';
-import { Usuario } from '../models/usuario';
+import { Login } from '../views/login/login-model';
+import { Usuario } from '../../models/usuario';
 
 /**
  * Este servicio sabe como gestionar con la API

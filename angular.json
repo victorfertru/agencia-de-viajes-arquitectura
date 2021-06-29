@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "agencia-de-viajes-routing": {
+    "agencia-de-viajes-arquitectura": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/agencia-de-viajes-routing",
+            "outputPath": "dist/agencia-de-viajes-arquitectura",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -75,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "agencia-de-viajes-routing:build:production"
+              "browserTarget": "agencia-de-viajes-arquitectura:build:production"
             },
             "development": {
-              "browserTarget": "agencia-de-viajes-routing:build:development"
+              "browserTarget": "agencia-de-viajes-arquitectura:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "agencia-de-viajes-routing:build"
+            "browserTarget": "agencia-de-viajes-arquitectura:build"
           }
         },
         "test": {
@@ -110,5 +110,5 @@
       }
     }
   },
-  "defaultProject": "agencia-de-viajes-routing"
+  "defaultProject": "agencia-de-viajes-arquitectura"
 }

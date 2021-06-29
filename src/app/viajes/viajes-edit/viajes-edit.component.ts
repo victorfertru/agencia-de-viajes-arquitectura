@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formatFecha } from 'src/app/utils/dates-helpers';
+import { formatFecha } from 'src/app/core/utils/dates-helpers';
 import { TipoDeViaje } from '../models/enums/tipo-de-viaje.enum';
 import { TiposDeViajes } from '../models/tiposDeViajes';
 import { Viaje } from '../models/viaje';

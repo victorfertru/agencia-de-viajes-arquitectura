@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'agencia-de-viajes-routing';
+  title = 'agencia-de-viajes-arquitectura';
   elUsuarioEstaEnLogin = false;
 
   constructor(private authService: AuthService, private router: Router) {

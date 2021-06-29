@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formatFecha } from 'src/app/utils/dates-helpers';
+import { formatFecha } from 'src/app/core/utils/dates-helpers';
 import { Cliente } from '../models/cliente';
 import { EstadoCivil } from '../models/estadoCivil';
 import { ClientesModelService } from '../services/clientes-model.service';
