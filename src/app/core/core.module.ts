@@ -9,10 +9,18 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LoaderComponent } from './components/loader/loader.component';
+import { HttpLoaderInterceptor } from './services/http-loader.interceptor';
 registerLocaleData(es);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    HomeComponent,
+    LoaderComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -27,6 +35,11 @@ registerLocaleData(es);
       useValue: 'EUR',
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpLoaderInterceptor,
+      multi: true,
+    },
   ],
   exports: [AppComponent],
 })

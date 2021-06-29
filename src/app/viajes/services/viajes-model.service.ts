@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, pipe } from 'rxjs';
-import { Viaje } from '../models/viaje';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Viaje } from '../models/viaje';
 import { ViajesFilter } from '../models/viajesFilter';
 
 @Injectable({
