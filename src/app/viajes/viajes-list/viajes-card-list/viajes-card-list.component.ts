@@ -14,7 +14,7 @@ import { Viaje } from '../../models/viaje';
   styleUrls: ['./viajes-card-list.component.scss'],
 })
 export class ViajesCardListComponent implements OnInit, OnChanges {
-  @Input() viajes: Viaje[] = [];
+  @Input() viajes: Viaje[] | null = [];
   viajesCards: Viaje[] = [];
   constructor() {}
 

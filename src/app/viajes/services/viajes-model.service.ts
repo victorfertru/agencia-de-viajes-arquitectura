@@ -1,8 +1,15 @@
-import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpStatusCode,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GridEvent } from '../models/grid-event';
 import { Viaje } from '../models/viaje';
+import { ViajesGridResult } from '../models/viajes-grid-result';
 import { ViajesFilter } from '../models/viajesFilter';
 
 @Injectable({
@@ -13,20 +20,14 @@ export class ViajesModelService {
 
   constructor(private http: HttpClient) {}
 
-  getViajes(): Observable<Viaje[]> {
-    return (
-      this.http
-        .get<Viaje[]>(`${this.url}`)
-        //.pipe(map((x) => x.map((v) => new ViajeList(v))));
-        .pipe(
-          map((x) =>
-            x.map((v: any) => {
-              const viaje = new Viaje(v);
-              viaje.tipoDeViajeDesc = v.tipoDeViaje?.tipoDeViajeDesc ?? '';
-              return viaje;
-            })
-          )
-        )
+  getViajes(): Observable<ViajesGridResult> {
+    let params = new HttpParams();
+    params = params.set('page', 1);
+    params = params.set('pageSize', 5);
+    return this.http.get<ViajesGridResult>(`${this.url}`, { params }).pipe(
+      map((x) => {
+        return new ViajesGridResult(x);
+      })
     );
   }
 
@@ -36,73 +37,67 @@ export class ViajesModelService {
       .pipe(map((x) => new Viaje(x)));
   }
 
-  // todo ------
-  getViajesPaginate(filtro: any): Observable<Viaje[]> {
-    const { pageSize, page, sort } = filtro;
-
+  buscar(
+    filtro: ViajesFilter | null,
+    ev: GridEvent = { page: 1, pageSize: 5 }
+  ): Observable<ViajesGridResult> {
     let httpP = new HttpParams();
-    if (filtro?.pageSize) {
-      httpP = httpP.set('pageSize', pageSize);
-    }
-    if (filtro?.page) {
-      httpP = httpP.set('page', page);
-    }
-    if (filtro?.sort) {
-      httpP = httpP.set('sort', sort);
+    if (filtro) {
+      const { tipoDeViajeId, nombre, destino } = filtro;
+      if (filtro?.tipoDeViajeId) {
+        httpP = httpP.set('tipoDeViajeId', tipoDeViajeId);
+      }
+      if (filtro?.nombre) {
+        httpP = httpP.set('nombre', nombre);
+      }
+      if (filtro?.destino) {
+        httpP = httpP.set('destino', destino);
+      }
     }
 
-    return (
-      this.http
-        .get<any>(`${this.url}`, {
-          params: httpP,
-        })
-        //.pipe(map((x) => x.map((v) => new ViajeList(v))));
-        .pipe(
-          map((x) => {
-            console.log(x);
-            return x.rows.map((v: any) => {
-              console.log(v);
-              const viaje = new Viaje(v);
-              viaje.tipoDeViajeDesc = v.tipoDeViaje?.tipoDeViajeDesc ?? '';
-              return viaje;
-            });
-          })
-        )
-    );
-  }
-  // todo ------
-
-  buscar(filtro: ViajesFilter): Observable<Viaje[] | []> {
-    const { tipoDeViajeId, nombre, destino } = filtro;
-
-    let httpP = new HttpParams();
-    if (filtro?.tipoDeViajeId) {
-      httpP = httpP.set('tipoDeViajeId', tipoDeViajeId);
-    }
-    if (filtro?.nombre) {
-      httpP = httpP.set('nombre', nombre);
-    }
-    if (filtro?.destino) {
-      httpP = httpP.set('destino', destino);
+    if (ev.page && ev.pageSize) {
+      httpP = httpP.set('page', ev.page);
+      httpP = httpP.set('pageSize', ev.pageSize);
     }
     return this.http
-      .get<Viaje[] | []>(`${this.url}/search`, {
+      .get<ViajesGridResult>(`${this.url}/search`, {
+        params: httpP,
+      })
+      .pipe(map((x) => new ViajesGridResult(x)));
+  }
+
+  paging(
+    filtro: ViajesFilter | null,
+    ev: GridEvent = { page: 1, pageSize: 5 }
+  ): Observable<ViajesGridResult | null> {
+    let httpP = new HttpParams();
+    if (filtro) {
+      const { tipoDeViajeId, nombre, destino } = filtro;
+      if (filtro?.tipoDeViajeId) {
+        httpP = httpP.set('tipoDeViajeId', tipoDeViajeId);
+      }
+      if (filtro?.nombre) {
+        httpP = httpP.set('nombre', nombre);
+      }
+      if (filtro?.destino) {
+        httpP = httpP.set('destino', destino);
+      }
+    }
+
+    if (ev.page && ev.pageSize) {
+      httpP = httpP.set('page', ev.page);
+      httpP = httpP.set('pageSize', ev.pageSize);
+    }
+
+    return this.http
+      .get<ViajesGridResult | null>(`${this.url}`, {
         params: httpP,
       })
       .pipe(
-        map((x) =>
-          x.map((v: any) => {
-            const viaje = new Viaje(v);
-            viaje.tipoDeViajeDesc = v.tipoDeViaje?.tipoDeViajeDesc ?? '';
-            return viaje;
-          })
-        )
+        map((x) => {
+          return new ViajesGridResult(x);
+        })
       );
-
-    //  const params = `tipoDeViajeId=${tipoDeViajeId}&nombre=${nombre}&destino=${destino}`;
-    // return this.http
-    //   .get<Viaje[] | []>(`${this.url}/search?${params}`)
-    //   .pipe(map((x) => x.map((v: Viaje) => new Viaje(v))));
   }
 
   guardar(viaje: Viaje): Observable<Viaje | null> {
@@ -116,7 +111,6 @@ export class ViajesModelService {
         .pipe(map((x) => new Viaje(x)));
     }
 
-    //crear nuevo viaje
     return this.http
       .post<Viaje>(`${this.url}`, viaje)
       .pipe(map((x) => new Viaje(x)));
@@ -124,9 +118,6 @@ export class ViajesModelService {
 
   eliminar(id: string): Observable<boolean | null> {
     if (id) {
-      // return this.http
-      //   .delete<ViajeDelete>(`${this.url}/${id}`)
-      //   .pipe(map((x) => x.deleted));
       return this.http
         .delete<boolean>(`${this.url}/${id}`, {
           observe: 'response',

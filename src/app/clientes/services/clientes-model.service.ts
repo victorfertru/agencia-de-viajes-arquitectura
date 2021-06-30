@@ -1,13 +1,7 @@
-import {
-  HttpClient,
-  HttpParams,
-  HttpResponse,
-  HttpStatusCode,
-} from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { Cliente } from '../models/cliente';
 import { ClienteListItem } from '../models/clientes-list-item';
 
@@ -32,42 +26,6 @@ export class ClientesModelService {
       )
     );
   }
-
-  // todo ------
-  getViajesPaginate(filtro: any): Observable<ClienteListItem[]> {
-    const { pageSize, page, sort } = filtro;
-
-    let httpP = new HttpParams();
-    if (filtro?.pageSize) {
-      httpP = httpP.set('pageSize', pageSize);
-    }
-    if (filtro?.page) {
-      httpP = httpP.set('page', page);
-    }
-    if (filtro?.sort) {
-      httpP = httpP.set('sort', sort);
-    }
-
-    return (
-      this.http
-        .get<any>(`${this.url}`, {
-          params: httpP,
-        })
-        //.pipe(map((x) => x.map((v) => new ViajeList(v))));
-        .pipe(
-          map((x) => {
-            console.log(x);
-            return x.rows.map((v: any) => {
-              console.log(v);
-              const cliente = new ClienteListItem(v);
-              cliente.estadoCivilDesc = v.estadoCivil?.estadoCivilDesc ?? '';
-              return cliente;
-            });
-          })
-        )
-    );
-  }
-  // todo ------
 
   getById(id: string): Observable<Cliente | null> {
     if (!id) {

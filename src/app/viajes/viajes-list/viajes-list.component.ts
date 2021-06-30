@@ -5,6 +5,8 @@ import { ViajesFilter } from '../models/viajesFilter';
 import { ViajesModelService } from '../services/viajes-model.service';
 import { TiposDeViajesModelService } from '../services/tipos-de-viajes-model.service';
 import { TiposDeViajes } from '../models/tiposDeViajes';
+import { GridEvent } from '../models/grid-event';
+import { ViajesGridResult } from '../models/viajes-grid-result';
 
 @Component({
   selector: 'app-viajes-list',
@@ -12,10 +14,12 @@ import { TiposDeViajes } from '../models/tiposDeViajes';
   styleUrls: ['./viajes-list.component.scss'],
 })
 export class ViajesListComponent implements OnInit {
-  viajes: Viaje[] = [];
+  viajes: ViajesGridResult = new ViajesGridResult();
   tiposDeViaje: TiposDeViajes[] = [];
 
-  mostrarTarjetas = true;
+  mostrarTarjetas = false;
+
+  filtro: ViajesFilter | null = null;
 
   constructor(
     private viajesModel: ViajesModelService,
@@ -36,6 +40,7 @@ export class ViajesListComponent implements OnInit {
 
   searchClick(filtro: ViajesFilter): void {
     if (filtro) {
+      this.filtro = filtro;
       this.viajesModel
         .buscar(filtro)
         .subscribe((viaje) => (this.viajes = viaje));
@@ -61,7 +66,6 @@ export class ViajesListComponent implements OnInit {
     if (id) {
       this.viajesModel.getViajeById(id).subscribe((viaje) => {
         if (viaje) {
-          //this.viajeEdicion = viaje;
           this.router.navigate(['viajes/editar', id]);
         }
       });
@@ -69,15 +73,16 @@ export class ViajesListComponent implements OnInit {
   }
 
   private cargarViajes() {
-    // pido datos, me suscribo y en ese momento se ejecuta la petición.
-    // los añado a mi lista de viajes
-    // this.viajesModel.getViajes().subscribe((x) => {
-    //   this.viajes = x;
-    // });
-    // let filtro = { pageSize: 4, page: 1, sort: 'destino' };
-    let filtro = {};
-    this.viajesModel.getViajesPaginate(filtro).subscribe((x) => {
+    this.viajesModel.getViajes().subscribe((x) => {
       this.viajes = x;
+    });
+  }
+
+  paging(ev: GridEvent): void {
+    this.viajesModel.buscar(this.filtro, ev).subscribe((result) => {
+      if (result) {
+        this.viajes = result;
+      }
     });
   }
 }
