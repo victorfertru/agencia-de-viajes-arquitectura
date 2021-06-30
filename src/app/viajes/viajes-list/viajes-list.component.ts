@@ -71,11 +71,12 @@ export class ViajesListComponent implements OnInit {
   private cargarViajes() {
     // pido datos, me suscribo y en ese momento se ejecuta la petición.
     // los añado a mi lista de viajes
-    this.viajesModel.getViajes().subscribe((x) => {
-      // x crea array de objetos literales
-      // this.viajes = x;
-      // console.log(this.viajes);
-      // creamos un array con objetos Viaje
+    // this.viajesModel.getViajes().subscribe((x) => {
+    //   this.viajes = x;
+    // });
+    // let filtro = { pageSize: 4, page: 1, sort: 'destino' };
+    let filtro = {};
+    this.viajesModel.getViajesPaginate(filtro).subscribe((x) => {
       this.viajes = x;
     });
   }

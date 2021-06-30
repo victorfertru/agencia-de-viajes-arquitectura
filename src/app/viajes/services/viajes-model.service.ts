@@ -36,6 +36,42 @@ export class ViajesModelService {
       .pipe(map((x) => new Viaje(x)));
   }
 
+  // todo ------
+  getViajesPaginate(filtro: any): Observable<Viaje[]> {
+    const { pageSize, page, sort } = filtro;
+
+    let httpP = new HttpParams();
+    if (filtro?.pageSize) {
+      httpP = httpP.set('pageSize', pageSize);
+    }
+    if (filtro?.page) {
+      httpP = httpP.set('page', page);
+    }
+    if (filtro?.sort) {
+      httpP = httpP.set('sort', sort);
+    }
+
+    return (
+      this.http
+        .get<any>(`${this.url}`, {
+          params: httpP,
+        })
+        //.pipe(map((x) => x.map((v) => new ViajeList(v))));
+        .pipe(
+          map((x) => {
+            console.log(x);
+            return x.rows.map((v: any) => {
+              console.log(v);
+              const viaje = new Viaje(v);
+              viaje.tipoDeViajeDesc = v.tipoDeViaje?.tipoDeViajeDesc ?? '';
+              return viaje;
+            });
+          })
+        )
+    );
+  }
+  // todo ------
+
   buscar(filtro: ViajesFilter): Observable<Viaje[] | []> {
     const { tipoDeViajeId, nombre, destino } = filtro;
 

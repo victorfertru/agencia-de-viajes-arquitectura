@@ -1,56 +1,61 @@
-<form [formGroup]="clientesForm" (ngSubmit)="guardarClick(clientesForm)" [ngClass]="{submited: submited}">
-   <div>
+<div>
 
-      <button [routerLink]="['/clientes']" class="btn primary" type="button">Volver a Clientes</button>
-   </div>
-   <fieldset>
-      <legend>
-         <h1> Clientes</h1>
-      </legend>
-      <div class="flex-row">
-         <div class="field-element">
-            <label for="">Nombre: </label>
-            <input type="text" formControlName="nombre">
-         </div>
-         <div class="field-element">
-            <label for="">Apellidos: </label>
-            <input type="text" formControlName="apellidos">
-         </div>
+   <button [routerLink]="['/clientes']" class="btn primary" type="button">Volver a Clientes</button>
+</div>
+<mat-card class="filter-card">
 
-         <div class="field-element">
-            <label for="">DNI: </label>
-            <input type="text" formControlName="dni">
-         </div>
-         <div class="field-element">
-            <label for="">Dirección: </label>
-            <input type="text" formControlName="direccion">
-         </div>
-         <div class="field-element">
-            <label for="">Teléfono: </label>
-            <input type="tel" formControlName="telefono">
-         </div>
-         <div class="field-element">
-            <label for="">E-Mail: </label>
-            <input type="email" formControlName="email">
-         </div>
-         <div class="field-element">
-            <label for="">Estado civil: </label>
-            <select formControlName="estadoCivilId">
-               <option></option>
-               <option *ngFor="let item of estadosCiviles" [ngValue]="item.id">{{item.descripcion}}</option>
-            </select>
-         </div>
-         <div class="field-element">
-            <label for="">Fecha de Nacimiento: </label>
-            <input type="date" formControlName="fechaNacimiento">
-         </div>
+   <mat-card-header>
+      <mat-card-title>Búsqueda de Viajes</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+      <form [formGroup]="clientesForm" (ngSubmit)="guardarClick(clientesForm)" [ngClass]="{submited: submited}">
+         <div fxLayout="row wrap" fxLayoutGap="1rem">
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Nombre</mat-label>
+               <input matInput placeholder="Introduce el nombre" formControlName="nombre">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Apellidos</mat-label>
+               <input matInput placeholder="Introduce los apellidos" formControlName="apellidos">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>DNI</mat-label>
+               <input matInput placeholder="Introduce el DNI/NIE" formControlName="dni">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Dirección</mat-label>
+               <input matInput placeholder="Introduce la dirección" formControlName="direccion">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Teléfono</mat-label>
+               <input matInput type="tel" placeholder="Introduce el teléfono" formControlName="telefono">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>E-mail</mat-label>
+               <input matInput type="email" placeholder="Introduce el email" formControlName="email">
+            </mat-form-field>
 
-      </div>
-   </fieldset>
-   <div class="row-buttons">
-      <button class="btn primary" type="submit">Guardar</button>
-      <button class="btn " type="button" (click)="resetForm()">Nuevo Viaje</button>
-   </div>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Seleccione su estado civil</mat-label>
+               <mat-select formControlName="estadoCivilId">
+                  <mat-option></mat-option>
+                  <mat-option *ngFor="let item of estadosCiviles" [value]="item.id">{{item.descripcion}}</mat-option>
+               </mat-select>
+            </mat-form-field>
 
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Fecha de nacimiento</mat-label>
+               <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+               <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+         </div>
+         <div class="row-buttons">
 
-</form>
+            <button mat-stroked-button color="primary" type="submit">Guardar</button>
+            <button mat-stroked-button color="accent" type="button" (click)="resetForm()">Nuevo cliente</button>
+
+         </div>
+      </form>
+   </mat-card-content>
+</mat-card>

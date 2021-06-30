@@ -1,36 +1,34 @@
-<form [formGroup]="filterForm" (ngSubmit)="searchClick(filterForm)">
-   <div>
+<mat-card class="filter-card">
+   <mat-card-header>
+      <mat-card-title>Búsqueda de Viajes</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+      <form [formGroup]="filterForm" (ngSubmit)="searchClick(filterForm)">
+         <div fxLayout="row" fxLayoutGap="1rem">
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Nombre</mat-label>
+               <input matInput placeholder="Introduce el nombre" formControlName="nombre">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Destino</mat-label>
+               <input matInput placeholder="Introduce el destino" formControlName="destino">
+            </mat-form-field>
 
-   </div>
-   <fieldset>
-      <legend>
-         <h1>Búsqueda de viajes</h1>
-      </legend>
-      <div class="flex-row">
-         <div class="field-element">
-            <label for="">Nombre: </label>
-            <input id="" type="text" formControlName="nombre">
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Tipo de Viaje</mat-label>
+               <mat-select formControlName="tipoDeViajeId">
+                  <mat-option></mat-option>
+                  <mat-option *ngFor="let item of tiposDeViaje" value="{{item.id}}">{{item.valor}}</mat-option>
+               </mat-select>
+            </mat-form-field>
          </div>
-         <div class="field-element">
-            <label for="">Destino: </label>
-            <input id="" type="text" formControlName="destino">
+         <div class="row-buttons">
+
+            <button mat-stroked-button color="primary" type="submit">Buscar</button>
+            <button mat-stroked-button color="accent" type="button" (click)="limpiarFiltro(filterForm)">Limpiar
+               filtro</button>
+
          </div>
-
-         <div class="field-element">
-            <label for="">Tipo de Viaje: </label>
-            <select id="" formControlName="tipoDeViajeId">
-               <option></option>
-               <option *ngFor="let item of tiposDeViaje" [ngValue]="item.id">{{item.valor}}</option>
-            </select>
-         </div>
-
-      </div>
-      <div class="row-buttons">
-         <button class="btn primary" type="submit">Buscar</button>
-         <button class="btn primary" type="button" (click)="limpiarFiltro(filterForm)">Limpiar filtro</button>
-      </div>
-   </fieldset>
-
-
-
-</form>
+      </form>
+   </mat-card-content>
+</mat-card>

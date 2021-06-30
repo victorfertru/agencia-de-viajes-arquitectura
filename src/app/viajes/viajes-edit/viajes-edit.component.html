@@ -1,67 +1,76 @@
-<form [formGroup]="viajesForm" (ngSubmit)="guardarClick(viajesForm)" [ngClass]="{submited: submited}">
-   <div>
-      <button [routerLink]="['/viajes']" class="btn primary" type="button">Volver a Viajes</button>
-   </div>
-   <fieldset>
-      <legend>
-         <h1> Edicion de Viajes</h1>
-      </legend>
-      <div class="flex-row">
-         <div class="field-element">
-            <label for="">Nombre: </label>
-            <input id="" type="text" formControlName="nombre">
-         </div>
-         <div class="field-element">
-            <label for="">Destino: </label>
-            <input id="" type="text" formControlName="destino">
-            <span class="error" *ngIf="viajesForm.controls.destino.hasError('invalidDestiny')">Restricción
-               COVID</span>
-         </div>
+<div>
+   <button [routerLink]="['/viajes']" class="btn primary" type="button">Volver a Viajes</button>
+</div>
 
-         <div class="field-element">
-            <label for="">Tipo de Viaje: </label>
-            <select id="" formControlName="tipoDeViajeId">
-               <option *ngFor="let item of tiposDeViaje" [ngValue]="item.id">{{item.valor}}</option>
-            </select>
-         </div>
-         <div class="field-element">
-            <label for="">Duración: </label>
-            <input id="" type="number" formControlName="duracion">
-         </div>
-         <div class="field-element">
-            <label for="">Precio: </label>
-            <input id="" type="number" formControlName="precio">
-         </div>
-         <div class="field-element">
-            <label for="">Fecha de salida: </label>
-            <input type="date" formControlName="fecha">
-         </div>
-         <div class="field-element">
-            <label for="">Plazas: </label>
-            <input id="" type="number" formControlName="plazas">
-         </div>
-         <div class="field-element">
-            <label for="">Estado: </label>
-            <select id="" formControlName="estado">
+<mat-card class="filter-card">
 
-            </select>
+   <mat-card-header>
+      <mat-card-title>Edición de Viajes</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+      <form [formGroup]="viajesForm" (ngSubmit)="guardarClick(viajesForm)" [ngClass]="{submited: submited}">
+         <div fxLayout="row wrap" fxLayoutGap="1rem">
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Nombre</mat-label>
+               <input matInput placeholder="Introduce el nombre" formControlName="nombre">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Destino</mat-label>
+               <input matInput placeholder="Introduce el destino" formControlName="destino">
+               <mat-error *ngIf="viajesForm.controls.destino.hasError('invalidDestiny')">Restricción COVID</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Tipo de viaje</mat-label>
+               <mat-select formControlName="tipoDeViajeId">
+                  <mat-option></mat-option>
+                  <mat-option *ngFor="let item of tiposDeViaje" [value]="item.id">{{item.valor}}</mat-option>
+               </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" fxFlex="1 1 175px">
+               <mat-label>Duración</mat-label>
+               <input matInput type="number" placeholder="Introduce la duración" formControlName="duracion">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 175px">
+               <mat-label>Precio</mat-label>
+               <input matInput type="number" class="right-align" placeholder="Introduce el precio"
+                  formControlName="precio">
+               <span matPrefix>€&nbsp;</span>
+
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 175px">
+               <mat-label>Fecha de salida</mat-label>
+               <input matInput [matDatepicker]="picker" formControlName="fecha">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+               <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" fxFlex="1 1 175px">
+               <mat-label>Plazas</mat-label>
+               <input matInput type="number" placeholder="Introduce las plazas" formControlName="plazas">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 300px">
+               <mat-label>Estado</mat-label>
+               <mat-select formControlName="estado">
+                  <mat-option></mat-option>
+               </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="1 1 175px">
+               <mat-label>En oferta</mat-label>
+               <mat-select formControlName="enOferta">
+                  <mat-option [value]="true">Si</mat-option>
+                  <mat-option [value]="false">No</mat-option>
+               </mat-select>
+            </mat-form-field>
+
+
          </div>
-         <div class="field-element">
-            <label for="">En oferta: </label>
-            <select id="" formControlName="enOferta">
-               <option value="true">Sí</option>
-               <option value="false">No</option>
-            </select>
+         <div class="row-buttons">
+
+            <button mat-stroked-button color="primary" type="submit">Guardar</button>
+            <button mat-stroked-button color="accent" type="button" (click)="resetForm()">Nuevo Viaje</button>
+
          </div>
-
-      </div>
-   </fieldset>
-   <div class="row-buttons">
-      <!-- desactivar botón hasta que tenga todos los campos correctos
-          <button class="btn primary" type="submit" [disabled]="viajesForm.invalid">Guardar</button> -->
-      <button class="btn primary" type="submit">Guardar</button>
-      <button class="btn " type="button" (click)="resetForm()">Nuevo Viaje</button>
-   </div>
-
-
-</form>
+      </form>
+   </mat-card-content>
+</mat-card>
