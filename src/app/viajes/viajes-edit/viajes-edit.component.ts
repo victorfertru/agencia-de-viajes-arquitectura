@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastMessagesService } from 'src/app/core/services/toast-messages.service';
 import { formatFecha } from 'src/app/core/utils/dates-helpers';
 import { TipoDeViaje } from '../models/enums/tipo-de-viaje.enum';
 import { TiposDeViajes } from '../models/tiposDeViajes';
@@ -31,7 +32,8 @@ export class ViajesEditComponent implements OnInit {
     private viajesModel: ViajesModelService,
     private router: Router,
     private tiposModel: TiposDeViajesModelService,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private toastMessages: ToastMessagesService
   ) {
     route.params.subscribe((params) => {
       this.id = params.id || '';
@@ -99,6 +101,7 @@ export class ViajesEditComponent implements OnInit {
         viaje.fechaSalida = new Date(form.value.fecha);
       }
       this.viajesModel.guardar(viaje).subscribe(() => {
+        this.toastMessages.showSuccess('Viaje guardado');
         this.router.navigate(['viajes']);
       });
 

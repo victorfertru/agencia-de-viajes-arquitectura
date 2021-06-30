@@ -12,6 +12,19 @@ export class ViajesTableListComponent implements OnInit {
   @Output() editar = new EventEmitter<string>();
   @Output() eliminar = new EventEmitter<Viaje>();
 
+  displayedColumns: string[] = [
+    'nombre',
+    'destino',
+    'duracion',
+    'plazas',
+    'precio',
+    'tipoDeViajeDesc',
+    'estado',
+    'fechaSalida',
+    'enOferta',
+    'actions',
+  ];
+
   constructor() {}
 
   ngOnInit(): void {}

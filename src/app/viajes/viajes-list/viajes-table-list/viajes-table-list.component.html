@@ -1,60 +1,115 @@
 <div class="row">
 
    <div class="col-12">
-      <table class="table mi-tabla table-striped table-hover ">
-         <thead>
-            <tr>
-               <th>#</th>
-               <th class="left">Nombre</th>
-               <th>Destino</th>
-               <th>Tipo de Viaje</th>
-               <th>Duración</th>
-               <th>Plazas</th>
-               <th>Precio</th>
-               <th>Estado</th>
+      <table mat-table [dataSource]="viajes" class="mi-tabla mat-elevation-z8 ">
+         <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+         </ng-container>
+         <ng-container matColumnDef="destino">
+            <th mat-header-cell *matHeaderCellDef> Destino </th>
+            <td mat-cell *matCellDef="let element"> {{element.destino}} </td>
+         </ng-container>
+         <ng-container matColumnDef="tipoDeViajeDesc">
+            <th mat-header-cell *matHeaderCellDef> Tipo de Viaje </th>
+            <td mat-cell *matCellDef="let element"> {{element.tipoDeViajeDesc}} </td>
+         </ng-container>
+         <ng-container matColumnDef="duracion">
+            <th mat-header-cell *matHeaderCellDef> Duración </th>
+            <td mat-cell *matCellDef="let element"> {{element.duracion}} </td>
+         </ng-container>
+         <ng-container matColumnDef="plazas">
+            <th mat-header-cell *matHeaderCellDef> Plazas </th>
+            <td mat-cell *matCellDef="let element"> {{element.plazas}} </td>
+         </ng-container>
+         <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef> Precio </th>
+            <td mat-cell *matCellDef="let element"> {{element.precio | currency:'':"symbol":"1.0-2"}} </td>
+         </ng-container>
+         <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+         </ng-container>
+         <ng-container matColumnDef="fechaSalida">
+            <th mat-header-cell *matHeaderCellDef> Fecha de salida </th>
+            <td mat-cell *matCellDef="let element"> {{element.fechaSalida | date: 'mediumDate'}} </td>
+         </ng-container>
+         <ng-container matColumnDef="enOferta">
+            <th mat-header-cell *matHeaderCellDef> En oferta </th>
+            <td mat-cell *matCellDef="let element">
+               <mat-icon color="accent" *ngIf="element.enOferta">check</mat-icon>
+            </td>
+         </ng-container>
+         <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+               <button color="primary" mat-icon-button aria-label="Editar" title="Editar">
+                  <mat-icon (click)="editar.emit(element.id)">edit</mat-icon>
+               </button>
+               <button color="warn" mat-icon-button aria-label="Eliminar" title="Eliminar">
+                  <mat-icon (click)="eliminar.emit(element)">delete</mat-icon>
+               </button>
+            </td>
+         </ng-container>
 
-               <th>Fecha salida</th>
-               <th>En oferta</th>
-               <th></th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr *ngFor="let v of viajes; let idx = index">
-               <th>
-                  {{idx+1}}
-               </th>
-               <td class="left">
-                  {{v.nombre}}
-               </td>
-               <td>
-                  {{v.destino}}
-               </td>
-               <td>
-                  {{v.tipoDeViajeDesc}}
-               </td>
-               <td>
-                  {{v.duracion}}
-               </td>
-               <td>
-                  {{v.plazas}}
-               </td>
-               <td>
-                  {{v.precio | currency:'':"symbol":"1.0-2"}}
-               </td>
-               <td>
-                  {{v.estado}}
-               </td>
-               <td>
-                  {{v.fechaSalida | date: 'mediumDate'}}
-               </td>
-               <td>
-                  <i class="fas" [ngClass]="v.enOferta ? 'fa-check' : ''"></i>
-               </td>
-               <td><i class="far fa-edit" title="Editar Viaje" (click)="editar.emit(v.id)"></i>&nbsp; <i
-                     class="far fa-trash-alt" title="Eliminar Viaje" (click)="eliminar.emit(v)"></i>
-               </td>
-            </tr>
-         </tbody>
+         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+         <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+
+
       </table>
    </div>
 </div>
+
+
+<ng-template>
+   <thead>
+      <tr>
+         <th class="left">Nombre</th>
+         <th>Destino</th>
+         <th>Tipo de Viaje</th>
+         <th>Duración</th>
+         <th>Plazas</th>
+         <th>Precio</th>
+         <th>Estado</th>
+
+         <th>Fecha salida</th>
+         <th>En oferta</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let v of viajes">
+
+         <td class="left">
+            {{v.nombre}}
+         </td>
+         <td>
+            {{v.destino}}
+         </td>
+         <td>
+            {{v.tipoDeViajeDesc}}
+         </td>
+         <td>
+            {{v.duracion}}
+         </td>
+         <td>
+            {{v.plazas}}
+         </td>
+         <td>
+            {{v.precio | currency:'':"symbol":"1.0-2"}}
+         </td>
+         <td>
+            {{v.estado}}
+         </td>
+         <td>
+            {{v.fechaSalida | date: 'mediumDate'}}
+         </td>
+         <td>
+            <i class="fas" [ngClass]="v.enOferta ? 'fa-check' : ''"></i>
+         </td>
+         <td><i class="far fa-edit" title="Editar Viaje" (click)="editar.emit(v.id)"></i>&nbsp; <i
+               class="far fa-trash-alt" title="Eliminar Viaje" (click)="eliminar.emit(v)"></i>
+         </td>
+      </tr>
+   </tbody>
+</ng-template>
