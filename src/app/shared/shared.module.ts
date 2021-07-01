@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { ConfirmationService } from './confirmation-modal/confirmation.service';
 
 @NgModule({
   declarations: [ConfirmationModalComponent],
@@ -47,8 +48,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
-    MatDialogModule,
-    ConfirmationModalComponent,
   ],
+  providers: [ConfirmationService],
 })
 export class SharedModule {}
