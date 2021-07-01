@@ -1,4 +1,4 @@
-<div class=" mat-elevation-z8 ">
+<div class=" mat-elevation-z3 ">
    <table mat-table [dataSource]="dataSource" class="mi-tabla ">
       <ng-container matColumnDef="nombre">
          <th mat-header-cell *matHeaderCellDef> Nombre </th>
@@ -57,60 +57,4 @@
    <mat-paginator *ngIf="totalItems" [pageSizeOptions]="[5, 10, 20]" [length]="totalItems" [pageSize]="5"
       (page)="pageChanged($event)" showFirstLastButtons>
    </mat-paginator>
-
 </div>
-
-
-<!-- 
-<ng-template>
-   <thead>
-      <tr>
-         <th class="left">Nombre</th>
-         <th>Destino</th>
-         <th>Tipo de Viaje</th>
-         <th>Duración</th>
-         <th>Plazas</th>
-         <th>Precio</th>
-         <th>Estado</th>
-
-         <th>Fecha salida</th>
-         <th>En oferta</th>
-         <th></th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr *ngFor="let v of viajes">
-
-         <td class="left">
-            {{v.nombre}}
-         </td>
-         <td>
-            {{v.destino}}
-         </td>
-         <td>
-            {{v.tipoDeViajeDesc}}
-         </td>
-         <td>
-            {{v.duracion}}
-         </td>
-         <td>
-            {{v.plazas}}
-         </td>
-         <td>
-            {{v.precio | currency:'':"symbol":"1.0-2"}}
-         </td>
-         <td>
-            {{v.estado}}
-         </td>
-         <td>
-            {{v.fechaSalida | date: 'mediumDate'}}
-         </td>
-         <td>
-            <i class="fas" [ngClass]="v.enOferta ? 'fa-check' : ''"></i>
-         </td>
-         <td><i class="far fa-edit" title="Editar Viaje" (click)="editar.emit(v.id)"></i>&nbsp; <i
-               class="far fa-trash-alt" title="Eliminar Viaje" (click)="eliminar.emit(v)"></i>
-         </td>
-      </tr>
-   </tbody>
-</ng-template> -->

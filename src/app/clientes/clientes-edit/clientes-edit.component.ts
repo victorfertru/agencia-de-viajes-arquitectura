@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatFecha } from 'src/app/core/utils/dates-helpers';
+import { ConfirmationService } from 'src/app/shared/modals/confirmation.service';
 import { Cliente } from '../models/cliente';
 import { EstadoCivil } from '../models/estadoCivil';
 import { ClientesModelService } from '../services/clientes-model.service';
@@ -25,7 +26,8 @@ export class ClientesEditComponent implements OnInit {
     route: ActivatedRoute,
     fb: FormBuilder,
     private clientesModel: ClientesModelService,
-    private estadosCivilesModel: EstadosCivilesModelService
+    private estadosCivilesModel: EstadosCivilesModelService,
+    private modalService: ConfirmationService
   ) {
     route.params.subscribe((params) => {
       this.id = params.id || '';
@@ -101,6 +103,9 @@ export class ClientesEditComponent implements OnInit {
         cliente.fechaNacimiento = new Date(form.value.fechaNacimiento);
       }
       this.clientesModel.save(cliente).subscribe(() => {
+        this.modalService.alert({
+          mensaje: `El cliente ${cliente.nombre} con dni ${cliente.dni} ha sido guardado con éxito`,
+        });
         this.router.navigate(['clientes']);
       });
     }

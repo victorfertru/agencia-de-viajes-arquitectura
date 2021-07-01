@@ -2,42 +2,42 @@
    <div>
       <button [routerLink]="['']" mat-raised-button color="basic" type="button">Volver a Inicio</button>
    </div>
-   <div class="col-12">
-      <table class="table mi-tabla  table-striped table-hover ">
-         <thead>
-            <tr>
-               <th>#</th>
-               <th class="left">Nombre</th>
-               <th>DNI</th>
-               <th>Teléfono</th>
-               <th>Estado civil</th>
-               <th>Editar</th>
-               <th>Borrar</th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr *ngFor="let c of clientes; let idx = index">
-               <th>
-                  {{idx+1}}
-               </th>
-               <td class="left">
-                  {{c.nombre}}
-               </td>
-               <td>
-                  {{c.dni}}
-               </td>
-               <td>
-                  {{c.telefono}}
-               </td>
-               <td>
-                  {{c.estadoCivilDesc}}
-               </td>
-               <td><i class="far fa-edit" title="Editar cliente" (click)="editarClick(c.id)"></i>
-               </td>
-               <td><i class="far fa-trash-alt" title="Eliminar Cliente" (click)="borrarClick(c)"></i>
-               </td>
-            </tr>
-         </tbody>
+   <div class=" mat-elevation-z3">
+      <table mat-table [dataSource]="clientes" class="mi-tabla ">
+         <ng-container matColumnDef="pos">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let i = index"> {{i +1 }} </td>
+         </ng-container>
+         <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre }} </td>
+         </ng-container>
+         <ng-container matColumnDef="dni">
+            <th mat-header-cell *matHeaderCellDef> DNI </th>
+            <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
+         </ng-container>
+         <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+         </ng-container>
+         <ng-container matColumnDef="estadoCivilDesc">
+            <th mat-header-cell *matHeaderCellDef> Estado civil </th>
+            <td mat-cell *matCellDef="let element"> {{element.estadoCivilDesc}} </td>
+         </ng-container>
+         <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+               <button color="primary" mat-icon-button aria-label="Editar" title="Editar">
+                  <mat-icon (click)="editarClick(element.id)">edit</mat-icon>
+               </button>
+               <button color="warn" mat-icon-button aria-label="Eliminar" title="Eliminar">
+                  <mat-icon (click)="borrarClick(element)">delete</mat-icon>
+               </button>
+            </td>
+         </ng-container>
+
+         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+         <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
       </table>
    </div>
 </div>

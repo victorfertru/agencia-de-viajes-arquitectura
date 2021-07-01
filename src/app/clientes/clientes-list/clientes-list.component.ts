@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ClientesModelService } from '../services/clientes-model.service';
 import { ClienteListItem } from '../models/clientes-list-item';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationService } from 'src/app/shared/modals/confirmation.service';
 
 @Component({
   selector: 'app-clientes-list',
@@ -9,17 +11,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./clientes-list.component.scss'],
 })
 export class ClientesListComponent implements OnInit {
-  clientes: ClienteListItem[] = [];
+  clientes = new MatTableDataSource<ClienteListItem>([]);
+
+  displayedColumns: string[] = [
+    'pos',
+    'nombre',
+    'dni',
+    'telefono',
+    'estadoCivilDesc',
+    'actions',
+  ];
+
   constructor(
     private clientesModel: ClientesModelService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
     this.clientesModel.getAll().subscribe((data) => {
-      this.clientes = data;
+      this.clientes.data = [...data];
     });
   }
+
   editarClick(id: string): void {
     if (id) {
       this.clientesModel.getById(id).subscribe((cliente) => {
@@ -31,23 +45,29 @@ export class ClientesListComponent implements OnInit {
   }
 
   borrarClick(cliente: ClienteListItem): void {
-    if (
-      cliente &&
-      confirm(
-        `¿Seguro que desea eliminar la cuenta de ${cliente.nombre} (${cliente.dni})?`
-      )
-    ) {
-      this.clientesModel.delete(cliente.id).subscribe((resultado) => {
-        if (resultado) {
-          this.cargarClientes();
-        }
-      });
+    if (cliente) {
+      this.confirmationService
+        .confirmar({
+          titulo: 'Eliminar Cliente',
+          pregunta: `¿Seguro que desea eliminar el cliente ${cliente.nombre} con dni ${cliente.dni}?`,
+          opcionSi: 'Sí, eliminar',
+          opcionNo: 'No, cancelar',
+        })
+        .subscribe((x) => {
+          if (x) {
+            this.clientesModel.delete(cliente.id).subscribe((resultado) => {
+              if (resultado) {
+                this.cargarClientes();
+              }
+            });
+          }
+        });
     }
   }
 
   private cargarClientes() {
     this.clientesModel.getAll().subscribe((x) => {
-      this.clientes = x;
+      this.clientes.data = x;
     });
   }
 }

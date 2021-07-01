@@ -4,12 +4,20 @@
 
    <div>
       <a [routerLink]="['viajes']" title="Listado de Viajes">Listado de Viajes</a>
+      <span class="example-spacer"></span>
       <a [routerLink]="['viajes/editar']" title="Crear viaje">Crear viaje</a>
+      <span class="example-spacer"></span>
       <a [routerLink]="['clientes']" title="Clientes">Clientes</a>
+      <span class="example-spacer"></span>
       <a [routerLink]="['clientes/editar']" title="Crear cliente">Crear cliente</a>
    </div>
 
    <div class="logout">
+      <a [routerLink]="['admin']" title="Panel de administración">
+         <button mat-icon-button>
+            <mat-icon>admin_panel_settings</mat-icon>
+         </button>Administración</a>
+
       <button mat-icon-button aria-label="Cerrar sesión" title="Cerrar sesión">
          <mat-icon (click)="logout.emit()">logout</mat-icon>
       </button>

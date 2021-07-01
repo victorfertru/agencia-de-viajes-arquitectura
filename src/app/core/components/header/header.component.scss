@@ -8,7 +8,7 @@
 a {
   color: #fff;
   text-decoration: none;
-  margin: 0 0.35rem;
+
   &:hover {
     color: #d0d0d0;
   }
@@ -16,4 +16,8 @@ a {
 mat-toolbar {
   justify-content: space-between;
   font-size: 1.1rem;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
 }
