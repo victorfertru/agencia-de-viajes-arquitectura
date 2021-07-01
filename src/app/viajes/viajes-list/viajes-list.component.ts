@@ -7,6 +7,8 @@ import { TiposDeViajesModelService } from '../services/tipos-de-viajes-model.ser
 import { TiposDeViajes } from '../models/tiposDeViajes';
 import { GridEvent } from '../models/grid-event';
 import { ViajesGridResult } from '../models/viajes-grid-result';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-viajes-list',
@@ -24,7 +26,8 @@ export class ViajesListComponent implements OnInit {
   constructor(
     private viajesModel: ViajesModelService,
     private tiposModel: TiposDeViajesModelService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -48,17 +51,26 @@ export class ViajesListComponent implements OnInit {
   }
 
   eliminarClick(viaje: Viaje): void {
-    if (
-      viaje &&
-      confirm(
-        `¿Seguro que desea eliminar el viaje ${viaje.nombre} con destino ${viaje.destino}?`
-      )
-    ) {
-      this.viajesModel.eliminar(viaje.id).subscribe((resultado) => {
-        if (resultado) {
-          this.cargarViajes();
-        }
-      });
+    if (viaje) {
+      this.dialog
+        .open(ConfirmationModalComponent, {
+          data: {
+            titulo: 'Eliminar Viaje',
+            pregunta: `¿Seguro que desea eliminar el viaje ${viaje.nombre} con destino ${viaje.destino}?`,
+            opcionSi: 'Sí, eliminar',
+            opcionNo: 'No, cancelar',
+          },
+        })
+        .afterClosed()
+        .subscribe((x) => {
+          if (x) {
+            this.viajesModel.eliminar(viaje.id).subscribe((resultado) => {
+              if (resultado) {
+                this.cargarViajes();
+              }
+            });
+          }
+        });
     }
   }
 

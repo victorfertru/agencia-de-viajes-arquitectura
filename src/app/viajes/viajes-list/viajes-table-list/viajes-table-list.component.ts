@@ -50,8 +50,6 @@ export class ViajesTableListComponent
     if (changes.viajes) {
       this.dataSource.data = [...changes.viajes.currentValue.rows];
       this.totalItems = changes.viajes.currentValue.count;
-
-      console.log(this.dataSource.data);
     }
   }
 
