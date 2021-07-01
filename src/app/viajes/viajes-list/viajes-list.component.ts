@@ -10,6 +10,7 @@ import { ViajesGridResult } from '../models/viajes-grid-result';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from 'src/app/shared/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationService } from 'src/app/shared/modals/confirmation.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-viajes-list',
@@ -35,7 +36,9 @@ export class ViajesListComponent implements OnInit {
   ngOnInit(): void {
     this.cargarViajes();
     this.tiposModel.getAll().subscribe((data) => {
-      this.tiposDeViaje = data;
+      if (data) {
+        this.tiposDeViaje = data;
+      }
     });
   }
 
@@ -46,9 +49,11 @@ export class ViajesListComponent implements OnInit {
   searchClick(filtro: ViajesFilter): void {
     if (filtro) {
       this.filtro = filtro;
-      this.viajesModel
-        .buscar(filtro)
-        .subscribe((viaje) => (this.viajes = viaje));
+      this.viajesModel.buscar(filtro).subscribe((viaje) => {
+        if (viaje) {
+          this.viajes = viaje;
+        }
+      });
     }
   }
 

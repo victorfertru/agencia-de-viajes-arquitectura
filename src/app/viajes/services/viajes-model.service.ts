@@ -5,8 +5,8 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { GridEvent } from '../models/grid-event';
 import { Viaje } from '../models/viaje';
 import { ViajesGridResult } from '../models/viajes-grid-result';
@@ -26,7 +26,10 @@ export class ViajesModelService {
     params = params.set('pageSize', 5);
     return this.http.get<ViajesGridResult>(`${this.url}`, { params }).pipe(
       map((x) => {
-        return new ViajesGridResult(x);
+        if (x) {
+          return new ViajesGridResult(x);
+        }
+        return new ViajesGridResult();
       })
     );
   }

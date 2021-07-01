@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userLogged = this.authService.userInfo;
+    this.userLogged = this.authService.user;
 
     if (this.userLogged) {
       this.modalService.alert({

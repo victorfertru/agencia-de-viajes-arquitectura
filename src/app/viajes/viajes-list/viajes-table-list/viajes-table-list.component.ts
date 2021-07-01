@@ -22,7 +22,7 @@ export class ViajesTableListComponent
 {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-  @Input() viajes: ViajesGridResult | null = null;
+  @Input() viajes: ViajesGridResult = new ViajesGridResult();
   @Output() editar = new EventEmitter<string>();
   @Output() eliminar = new EventEmitter<Viaje>();
 

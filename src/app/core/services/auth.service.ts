@@ -13,13 +13,17 @@ export class AuthService {
     localStorage.setItem(this.APP_USER, JSON.stringify(usuario));
   }
 
-  get userInfo(): Usuario | null {
+  get user(): Usuario | null {
     const u = localStorage.getItem(this.APP_USER);
     if (u) {
       const user: Usuario = JSON.parse(u);
-      return user;
+      return new Usuario(user);
     }
     return null;
+  }
+
+  hasUserRole(role: string): boolean {
+    return this.user ? this.user.role === role : false;
   }
 
   get bearer(): string {

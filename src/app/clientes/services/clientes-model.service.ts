@@ -14,17 +14,17 @@ export class ClientesModelService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<ClienteListItem[]> {
-    return this.http.get<ClienteListItem[]>(`${this.url}`).pipe(
-      map((x) =>
-        // x.map((c) => new ClienteListItem(c))
-        // TODO preguntar a jose qué poner en lugar de any para que funcione bien
-        x.map((c: any) => {
-          const cliente = new ClienteListItem(c);
-          cliente.estadoCivilDesc = c.estadoCivil?.estadoCivilDesc ?? '';
-          return cliente;
-        })
-      )
-    );
+    return this.http
+      .get<ClienteListItem[]>(`${this.url}`, { observe: 'body' })
+      .pipe(
+        map((x) =>
+          x.map((c: any) => {
+            const cliente = new ClienteListItem(c);
+            cliente.estadoCivilDesc = c.estadoCivil?.estadoCivilDesc ?? '';
+            return cliente;
+          })
+        )
+      );
   }
 
   getById(id: string): Observable<Cliente | null> {

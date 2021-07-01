@@ -20,7 +20,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     for (const urls of this.excludeUrls) {
       if (request.url.toLowerCase().includes(urls)) {
-        // if (request.url.toLowerCase().includes('login')) {
         return next.handle(request);
       }
     }

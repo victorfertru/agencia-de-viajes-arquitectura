@@ -6,8 +6,8 @@ import { AuthGuard } from './core/services/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {
     path: 'viajes',
     canActivate: [AuthGuard],
@@ -20,7 +20,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./clientes/clientes.module').then((m) => m.ClientesModule),
   },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    data: { requiredRole: 'admin' },
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({
